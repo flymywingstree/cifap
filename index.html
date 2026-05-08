@@ -23,6 +23,7 @@
       color: white;
       border: none;
       border-radius: 5px;
+      margin: 5px;
     }
     #message {
       font-size: 22px;
@@ -33,17 +34,34 @@
 <body>
 
   <h1>🎯 Number Guessing Game</h1>
-  <p>I'm thinking of a number between 1 and 100!</p>
 
-  <input type="number" id="guessInput" placeholder="?">
-  <button onclick="checkGuess()">Guess!</button>
+  <p>Select difficulty:</p>
+  <button onclick="startGame(50)">🟢 Easy (1-50)</button>
+  <button onclick="startGame(100)">🟡 Medium (1-100)</button>
+  <button onclick="startGame(200)">🔴 Hard (1-200)</button>
 
-  <p id="message"></p>
-  <p id="attempts"></p>
+  <div id="gameArea" style="display:none; margin-top:20px;">
+    <p id="rangeText"></p>
+    <input type="number" id="guessInput" placeholder="?">
+    <button onclick="checkGuess()">Guess!</button>
+    <p id="message"></p>
+    <p id="attempts"></p>
+  </div>
 
   <script>
-    let number = Math.floor(Math.random() * 100) + 1;
-    let attempts = 0;
+    let number, attempts, maxNumber;
+
+    function startGame(max) {
+      maxNumber = max;
+      number = Math.floor(Math.random() * max) + 1;
+      attempts = 0;
+
+      document.getElementById("gameArea").style.display = "block";
+      document.getElementById("rangeText").textContent = `Guess a number between 1 and ${max}!`;
+      document.getElementById("message").textContent = "";
+      document.getElementById("attempts").textContent = "";
+      document.getElementById("guessInput").value = "";
+    }
 
     function checkGuess() {
       const guess = parseInt(document.getElementById("guessInput").value);
